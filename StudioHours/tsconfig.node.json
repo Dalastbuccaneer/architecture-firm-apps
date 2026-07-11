@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
+    "target": "ES2023",
+    "lib": ["ES2023"],
+    "module": "ESNext",
+    "types": ["node"],
+    "forceConsistentCasingInFileNames": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "moduleDetection": "force",
+    "noEmit": true,
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "erasableSyntaxOnly": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedSideEffectImports": true,
+
+    /* vite-plugin-pwa pulls in workbox types that reference ServiceWorker
+       globals (ExtendableEvent, CacheQueryOptions, ...) which live in
+       lib.webworker.d.ts and conflict with lib.dom.d.ts if both are
+       included. skipLibCheck avoids type-checking inside node_modules
+       .d.ts files so this doesn't block our own build. */
+    "skipLibCheck": true
+  },
+  "include": ["vite.config.ts", "vite.offline.config.ts"]
+}

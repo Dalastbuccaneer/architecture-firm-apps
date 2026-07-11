@@ -1,0 +1,75 @@
+/*
+ * DESIGN RULE: exactly three font sizes (text-base 17px, text-2xl 26px, and
+ * text-hero 48px — the last reserved for the ONE hero figure a view may have;
+ * so far the Fee Burn percentage and Money's "Owed to you" total) and two
+ * weights (font-normal 400, font-bold 700) are allowed in this app — nothing
+ * else. Do not introduce additional text-* size or font-* weight utilities
+ * anywhere in the codebase.
+ * Base size is intentionally large (17px, up from a 14px default) so the app
+ * stays readable without zooming.
+ */
+
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #171717;
+  --color-ink-soft: #404040;
+  --color-line: #e5e5e5;
+  --color-paper: #ffffff;
+  /* Status colors are darkened to clear WCAG AA 4.5:1 as 17px text (the app's
+     only body size); still read as red / amber / green when used as bar fills. */
+  --color-alert: #d42a2f;
+  --color-warn: #b45309;
+  --color-ok: #15803d;
+  /* Meter-track steps for the Fee Burn view: the SAME OKLCH hue as each status
+     color above, lifted to L≈0.77 and muted to C≈0.07 so the budget track reads
+     as a groove under the darker fill. Derived + validated (dataviz
+     validate_palette --ordinal: monotone L, ΔL ≥ 0.06, ≥2:1 on white, one hue).
+     Change a status color and its -soft twin must be re-derived together. */
+  --color-alert-soft: #e1a7a0;
+  --color-warn-soft: #ddab90;
+  --color-ok-soft: #95c19d;
+
+  --font-sans: "Inter", system-ui, sans-serif;
+
+  --text-base: 17px;
+  --text-base--line-height: 1.5;
+  --text-2xl: 26px;
+  --text-2xl--line-height: 1.2;
+  /* Hero figure only (one per view) — proportional figures, never tabular-nums. */
+  --text-hero: 48px;
+  --text-hero--line-height: 1.1;
+}
+
+@layer base {
+  body {
+    @apply bg-paper text-ink text-base font-sans;
+    /* Chrome and content each manage their own inner overflow-x-auto; the page
+       body itself should never scroll sideways. */
+    overflow-x: hidden;
+  }
+
+  * {
+    outline-offset: 2px;
+  }
+
+  *:focus-visible {
+    outline: 2px solid var(--color-ink);
+    outline-offset: 2px;
+  }
+}
+
+@media print {
+  /* Print stylesheet placeholder — timesheet/export print rules go here. */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

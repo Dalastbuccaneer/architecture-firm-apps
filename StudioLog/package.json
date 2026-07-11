@@ -1,0 +1,36 @@
+{
+  "name": "studio-log",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build:web": "tsc -b && vite build",
+    "build:offline": "tsc -b && vite build --config vite.offline.config.ts",
+    "build": "npm run build:web && npm run build:offline && node -e \"require('fs').copyFileSync('dist-offline/index.html','dist/studio-log-offline.html')\"",
+    "preview": "vite preview",
+    "test": "node test-deadlines.mjs",
+    "e2e": "node e2e-smoke.mjs"
+  },
+  "dependencies": {
+    "@fontsource/inter": "^5.2.8",
+    "dexie": "^4.4.4",
+    "dexie-react-hooks": "^4.4.0",
+    "lucide-react": "^1.23.0",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.2",
+    "@types/node": "^26.1.0",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.3",
+    "playwright": "^1.61.1",
+    "tailwindcss": "^4.3.2",
+    "typescript": "^6.0.3",
+    "vite": "^8.1.3",
+    "vite-plugin-pwa": "^1.3.0",
+    "vite-plugin-singlefile": "^2.3.3"
+  }
+}
