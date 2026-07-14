@@ -11,7 +11,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { FilePlus2, Info } from 'lucide-react';
+import { FileOutput, FilePlus2, Info } from 'lucide-react';
 import { db } from '../db';
 import { useApp } from '../AppContext';
 import type { InvoiceStatus } from '../types';
@@ -19,6 +19,8 @@ import { invoiceTotals } from '../lib/invoice';
 import { firmRates, fmtMoney, hasAnyRate } from '../lib/rates';
 import { monthDayLabel, todayISO } from '../lib/dates';
 import { summarizeReceivables, type AgingBucketId } from '../lib/receivables';
+import { buildStudioPayExport, studiopayExportFilename } from '../lib/studiopayExport';
+import { downloadText } from '../lib/download';
 import InvoiceBuilder from '../components/invoice/InvoiceBuilder';
 import InvoiceEditor from '../components/invoice/InvoiceEditor';
 import ReceivablesStrip from '../components/invoice/ReceivablesStrip';
@@ -73,6 +75,7 @@ export default function Invoices() {
   const visibleInvoices = activeBucket
     ? invoices.filter((inv) => activeBucket.invoiceIds.includes(inv.invoiceId))
     : invoices;
+  const nonDraftInvoices = invoices.filter((inv) => inv.status !== 'draft');
 
   if (mode.kind === 'new') {
     return (
@@ -103,8 +106,22 @@ export default function Invoices() {
         <h1 className="text-2xl font-bold">Money</h1>
         <button
           type="button"
+          disabled={nonDraftInvoices.length === 0}
+          title={nonDraftInvoices.length === 0 ? 'No sent invoices yet' : undefined}
+          onClick={() =>
+            downloadText(
+              studiopayExportFilename(firm.firm.firmName),
+              JSON.stringify(buildStudioPayExport(nonDraftInvoices, firm.firm.firmName), null, 2),
+            )
+          }
+          className="ml-auto flex min-h-11 cursor-pointer items-center gap-2 border border-line px-4 py-2 transition-colors duration-200 hover:border-ink disabled:cursor-not-allowed disabled:opacity-60"
+        >
+          <FileOutput className="h-4 w-4" aria-hidden /> Export for StudioPay
+        </button>
+        <button
+          type="button"
           onClick={() => setMode({ kind: 'new' })}
-          className="ml-auto flex min-h-11 cursor-pointer items-center gap-2 bg-ink px-4 py-2 font-bold text-paper transition-colors duration-200 hover:bg-ink-soft"
+          className="flex min-h-11 cursor-pointer items-center gap-2 bg-ink px-4 py-2 font-bold text-paper transition-colors duration-200 hover:bg-ink-soft"
         >
           <FilePlus2 className="h-4 w-4" aria-hidden /> New invoice
         </button>

@@ -1,0 +1,77 @@
+/* Restyle driver.js's tour popover to match Studio Hours' design system:
+ * white surface, hairline border, square-ish corners, Inter, one weight for
+ * body copy and one for the title — only overriding what needs to change. */
+
+.driver-popover {
+  background-color: #ffffff;
+  color: #171717;
+  border: 1px solid #e5e5e5;
+  border-radius: 2px;
+  box-shadow: none;
+}
+
+.driver-popover * {
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.driver-popover-title {
+  font: 700 14px/1.5 'Inter', system-ui, sans-serif;
+  color: #171717;
+}
+
+.driver-popover-description {
+  font: 400 14px/1.5 'Inter', system-ui, sans-serif;
+  color: #171717;
+}
+
+.driver-popover-close-btn {
+  color: #404040;
+}
+.driver-popover-close-btn:hover,
+.driver-popover-close-btn:focus {
+  color: #171717;
+}
+
+.driver-popover-progress-text {
+  color: #404040;
+  font-size: 14px;
+}
+
+.driver-popover-footer-btn {
+  border: 1px solid #e5e5e5;
+  border-radius: 2px;
+  background-color: #ffffff;
+  color: #171717;
+  font: 400 14px/1.3 'Inter', system-ui, sans-serif;
+  padding: 4px 12px;
+  cursor: pointer;
+  transition: border-color 0.2s, background-color 0.2s, color 0.2s;
+}
+.driver-popover-footer-btn:hover,
+.driver-popover-footer-btn:focus {
+  border-color: #171717;
+  background-color: #ffffff;
+}
+.driver-popover-footer-btn.driver-popover-btn-disabled {
+  opacity: 0.4;
+}
+
+.driver-popover-next-btn,
+.driver-popover-done-btn {
+  background-color: #171717;
+  border-color: #171717;
+  color: #ffffff;
+  font-weight: 700;
+}
+.driver-popover-next-btn:hover,
+.driver-popover-next-btn:focus,
+.driver-popover-done-btn:hover,
+.driver-popover-done-btn:focus {
+  background-color: #404040;
+  border-color: #404040;
+  color: #ffffff;
+}
+
+.driver-popover-arrow {
+  border-color: #ffffff;
+}
